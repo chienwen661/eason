@@ -1,0 +1,185 @@
+<html>
+<head>
+<script>
+var qs={
+"sunday":"星期日",
+"monday":"星期一",
+"tuesday":"星期二",
+"wednesday":"星期三",
+"thursday":"星期四",
+"friday":"星期五",
+"saturday":"星期六",
+"fat":"胖",
+"thin":"瘦",
+"map":"地圖",
+"chicken":"雞",
+"hen":"母雞",
+"cow":"牛",
+"zebra":"斑馬",
+"finger":"手指",
+"cola":"可樂",
+"hat":"帽子",
+"face":"臉",
+"bee":"蜜蜂",
+"goat":"山羊",
+"cherry":"櫻桃",
+"drink":"飲料",
+"beef":"牛肉",
+"ant":"螞蟻",
+"chocolate":"巧克力",
+"noodle":"麵",
+"sandwich":"三明治",
+"soda":"汽水",
+"soup":"湯",
+"water":"水",
+"room":"房間",
+"toy":"玩具",
+"volleyball":"排球",
+"friend":"朋友",
+"corn":"玉米",
+"airplane":"飛機",
+"coat":"大衣",
+"boot":"靴子",
+"computer":"電腦",
+"eason":"陳昱瀚"
+};
+
+const ar=document.createElement("audio");
+const aw=document.createElement("audio");
+const _n = 4;
+var qks = Object.keys(qs);
+var qvs = Object.values(qs);
+var qlst = Array.from({ length: qks.length }, (v, k) => k ); // [0,1,2,3,...,9]
+var score = [0,0,0]; // corrent, wrong, mode
+var rpt=[];
+
+function $(o){ return document.querySelector(o); }
+function $$(o){ return document.querySelectorAll(o); }
+
+function init(){
+    mode(0,true);
+    aw.src="https://www2.cyvs.cy.edu.tw/sv/audio/error-04-199275.mp3";
+    ar.src="https://www2.cyvs.cy.edu.tw/sv/audio/bell-172780.mp3";
+    $("#items").style.display="none";
+}
+
+function nq() {
+    $("#btnNext").disabled=true;
+
+    while(true){
+        qlst=qlst.sort(() => Math.random() - Math.random()); // suffule
+        if (rpt.length==0 || !rpt.includes(qlst[0]) ) break; 
+    }
+    var ops=qlst.slice(0,_n).sort(() => Math.random() - Math.random());
+
+    var opts = $("#opts");
+    opts.innerHTML = "";
+    for(let i=0; i<_n; i++){
+        let newopt = document.createElement("div");
+        newopt.classList.add("opt");
+        newopt.textContent=qvs[ops[i]];
+        newopt.addEventListener('click', chkans);
+        if(ops[i]==qlst[0]){ newopt.classList.add("right"); }
+        opts.appendChild(newopt); 
+    }
+    
+    $("#q").textContent=qks[qlst[0]];
+
+    rpt.push(qlst[0]);
+    if(rpt.length==qks.length){ rpt = []; }
+}
+
+function mode(t, quiet=false){
+    if(!quiet && !confirm("此項操作會從新開始！你確定要繼續嗎？")){ return; } 
+    if(t==0){
+        qks = Object.keys(qs);
+        qvs = Object.values(qs);
+    } else if(t==1){
+        qks = Object.values(qs);
+        qvs = Object.keys(qs);
+    } else {
+        mode(score[2],true);
+        return;
+    }
+    score=[0,0,t];
+    rpt=[];
+    nq();
+    togglemenu();
+}
+
+function chkans(e){
+    opt = e.target;
+    if( opt.classList.contains("right") ){
+        opt.appendChild($("#svg_check").cloneNode(true));
+        score[0]++;
+        ar.play();
+	    ar.currentTime=0;
+        $$(".opt").forEach((t) => { t.removeEventListener('click',chkans); });
+        $("#btnNext").disabled=false;
+    } else {
+        opt.removeEventListener('click',chkans);
+        opt.appendChild($("#svg_cross").cloneNode(true));
+        score[1]++;
+        aw.play();
+        aw.currentTime=0;
+    }
+    $("#gr").textContent=score[0];
+    $("#gw").textContent=wrong[1];
+}
+
+function togglemenu(){
+    o = $("#items");
+    t = $("#toggle");
+    if(o.style.display=="none"){
+        o.style.display="";
+        t.textContent="▲"
+    } else {
+        o.style.display="none";
+        t.textContent="▼"
+    }
+}
+</script>
+<style>
+    body { overscroll-behavior-y: contain; }
+    #container { width:90%; font-size:24px; font-family:Georgia;}
+    #container div {padding:10px; margin:10px;}
+    #menu { font-size:0.5em; float:right;}
+    #menu #items, #menu #toggle { display:inline;}
+    #btndiv { float:right; }
+    #q { color:blue; font-size:2em; }
+    #opts .opt { color:green; border:3px grey solid; border-radius:10px; cursor:hand; }
+    #opts .opt:hover { border:3px black solid; }
+    #opts .right { }
+    #ans {display:none;}
+    #btnNext { padding:10px; font-size:1em; }
+  
+    svg { width:25px; height:25px; }
+    .st0{fill:#0000FF;}
+    .st1{fill:#FF0000;}
+    @media (orientation: portrait){
+  		#container { width:100%; font-size:56px; }
+        #opts .opt { margin:20px; padding:20px; font-size:1.5em; }
+  		svg { width:60px; height:60px; }
+    }
+</style>
+
+</head>
+<body onload="init()">
+    <div id="container">
+      <div id="menu"><div id="items">[<span onclick="mode(2)">重新開始</span>] [<span onclick="mode(0)">英選中</span>] [<span onclick="mode(1)">中選英</span>]</div><div id="toggle" onclick="togglemenu()">▼</div></div>
+        <div id="status"> 答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
+        <div id="btndiv"><button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
+        <div id="q">題目</div>
+        <div id="opts"></div>
+        <div id="ans"></div>
+    </div>
+    <div style="display:none;">
+        <svg id="svg_check" height="30px" width="30px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"  xml:space="preserve">
+	        <path class="st0" d="M469.402,35.492C334.09,110.664,197.114,324.5,197.114,324.5L73.509,184.176L0,254.336l178.732,222.172 l65.15-2.504C327.414,223.414,512,55.539,512,55.539L469.402,35.492z"/>
+        </svg>
+        <svg id="svg_cross" height="30px" width="30px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"  xml:space="preserve">
+            <g><polygon class="st1" points="512,52.535 459.467,0.002 256.002,203.462 52.538,0.002 0,52.535 203.47,256.005 0,459.465 52.533,511.998 256.002,308.527 459.467,511.998 512,459.475 308.536,256.005"/></g>
+        </svg>
+    </div>
+</body>
+</html>
