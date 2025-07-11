@@ -30,7 +30,7 @@ function nq() {
     //var letter = [...new Set([...qks[qlst[0]], ...qks[qlst[1]], ...qks[qlst[2]]])].sort(() => Math.random() - Math.random()); // suffule
     
 	    var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
-    $("#debug").textContent=typeof(letter) + letter.toString();    
+    $("#debug").textContent=letter.join() + qks[qlst[0];    
     
     var opts = $("#opts");
     opts.innerHTML = "";
