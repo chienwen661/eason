@@ -1,0 +1,163 @@
+<html lang="zh-Hant-TW">
+<head>
+
+<script src="data1.js"></script>
+<script>
+const ar=document.createElement("audio");
+const aw=document.createElement("audio");
+const _n = 4;
+var score = [0,0,0]; // corrent, wrong, mode
+var rpt=[];
+
+function $(o){ return document.querySelector(o); }
+function $$(o){ return document.querySelectorAll(o); }
+
+function init(){
+    aw.src="audio/error-04-199275.mp3";
+    ar.src="audio/bell-172780.mp3";
+    mode(true);
+}
+
+function nq() {
+    $$("button").forEach((b) => { b.disabled=false; });
+    $("#btnNext").disabled=true;
+
+    spell_cls();
+
+    while(true){
+        qlst=qlst.sort(() => Math.random() - Math.random()); // suffule
+        if (rpt.length==0 || !rpt.includes(qlst[0]) ) break; 
+    }
+    var letter = [...new Set([...qks[qlst[0]], ...qks[qlst[1]], ...qks[qlst[2]]])].sort(() => Math.random() - Math.random()); // suffule
+    
+    var opts = $("#opts");
+    opts.innerHTML = "";
+    for(let i=0; i<letter.length; i++){
+        let newopt = document.createElement("div");
+        newopt.classList.add("opt");
+        newopt.classList.add("no-select");
+        newopt.textContent=letter[i];
+        newopt.addEventListener('click', spell);
+        opts.appendChild(newopt); 
+    }
+    
+    $("#q").textContent=qvs[qlst[0]];
+    $("#ans").textContent=qks[qlst[0]];
+
+    rpt.push(qlst[0]);
+    if(rpt.length==qks.length){ rpt = []; }
+}
+
+function spell(e){
+    opt = e.target;
+    letter = opt.textContent;
+    $("#t").textContent+=letter;
+}
+
+function spell_back(){
+    let t = $("#t"); 
+    $("#t").textContent=$("#t").textContent.slice(0,-1);
+}
+
+function spell_cls(){
+    $("#t").innerHTML="";
+}
+
+function chkans(e){
+    var t = $("#t");
+    if (t.textContent== $("#ans").textContent){
+        t.appendChild($("#svg_check").cloneNode(true));
+        score[0]++;
+        ar.play();
+	    ar.currentTime=0;
+        $$(".opt").forEach((b) => { b.removeEventListener('click',spell); });
+        $$("button").forEach((b) => { b.disabled=true; });
+        $("#btnNext").disabled=false;
+    } else {
+        $("#q").appendChild($("#svg_cross").cloneNode(true));
+        score[1]++;
+        aw.play();
+        aw.currentTime=0;
+    }
+    $("#gr").textContent=score[0];
+    $("#gw").textContent=score[1];
+}
+
+function mode(quiet=false){
+    if(!quiet && !confirm("此項操作會從新開始！你確定要繼續嗎？")){ return; } 
+    score=[0,0,t];
+    rpt=[];
+    nq();
+    togglemenu();
+    $("#gr").textContent=score[0];
+    $("#gw").textContent=score[1];
+}
+
+function togglemenu(){
+    o = $("#items");
+    t = $("#toggle");
+    if(o.style.display=="none"){
+        o.style.display="";
+        t.textContent="▲"
+    } else {
+        o.style.display="none";
+        t.textContent="▼"
+    }
+}
+</script>
+<style>
+    body { overscroll-behavior-y: contain; }
+    #container { width:90%; font-size:24px; font-family:Georgia; }
+    #container div {padding:10px; margin:10px;}
+    #menu { font-size:0.5em; float:right;}
+    #menu #items, #menu #toggle { display:inline;}
+    #btndiv { float:right; }
+    #q { color:blue; font-size:2em; }
+    #t { font-size:2em; border:3px green solid; border-radius:20px; height:1em; }
+    #opts { display:flex; flex-wrap:wrap; }
+    #opts .opt { font-weight:bold; font-family:Courier New; color:green; border:3px green solid; border-radius:10px; cursor:hand; display:flex; }
+    #opts .opt:hover { border:3px black solid; }
+    #opts .right { }
+    #ans {display:none;}
+    #btnNext, #btnBack, #btnChk, #btnCls { padding:10px; font-size:1em; }
+ 
+    .no-select {
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none;    /* Firefox */
+        -ms-user-select: none;    /* IE10+ */
+        user-select: none;       /* Standard */
+    } 
+
+    svg { width:25px; height:25px; }
+    .st0{fill:#0000FF;}
+    .st1{fill:#FF0000;}
+    @media (orientation: portrait){
+  		#container { width:100%; font-size:56px; }
+        #opts .opt { margin:20px; padding:20px; font-size:1.5em; }
+  		svg { width:60px; height:60px; }
+    }
+</style>
+
+</head>
+<body onload="init()">
+    <div id="container">
+        <div id="menu"><div id="items">[<span onclick="mode()">重新開始</span>]</div><div id="toggle" onclick="togglemenu()">▼</div></div>
+        <div id="status"> 答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
+        <div id="btndiv"><button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
+        <div id="q">題目</div>
+        <div id="t"></div>
+        <div id="tm"><button id="btnCls" onclick="spell_cls()">清除</button>&nbsp;&nbsp;&nbsp;<button id="btnBack" onclick="spell_back()">倒退</button>&nbsp;&nbsp;&nbsp;<button id="btnChk" onclick="chkans()">送出</button></div>
+        <div id="opts"></div>
+        <div id="ans"></div>
+        <div id="debug"></div>
+    </div>
+    <div style="display:none;">
+        <svg id="svg_check" height="30px" width="30px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"  xml:space="preserve">
+	        <path class="st0" d="M469.402,35.492C334.09,110.664,197.114,324.5,197.114,324.5L73.509,184.176L0,254.336l178.732,222.172 l65.15-2.504C327.414,223.414,512,55.539,512,55.539L469.402,35.492z"/>
+        </svg>
+        <svg id="svg_cross" height="30px" width="30px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"  xml:space="preserve">
+            <g><polygon class="st1" points="512,52.535 459.467,0.002 256.002,203.462 52.538,0.002 0,52.535 203.47,256.005 0,459.465 52.533,511.998 256.002,308.527 459.467,511.998 512,459.475 308.536,256.005"/></g>
+        </svg>
+    </div>
+</body>
+</html>
