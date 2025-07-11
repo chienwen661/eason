@@ -14,7 +14,7 @@ function $$(o){ return document.querySelectorAll(o); }
 function init(){
     aw.src="audio/error-04-199275.mp3";
     ar.src="audio/bell-172780.mp3";
-    mode(true);
+    mode(0, true);
 }
 
 function nq() {
@@ -27,12 +27,14 @@ function nq() {
         qlst=qlst.sort(() => Math.random() - Math.random()); // suffule
         if (rpt.length==0 || !rpt.includes(qlst[0]) ) break; 
     }
-    //var letter = [...new Set([...qks[qlst[0]], ...qks[qlst[1]], ...qks[qlst[2]]])].sort(() => Math.random() - Math.random()); // suffule
-    while(true){
-	var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
-        if(letter.join("")!=qks[qlst[0]]) break;
+    if(status[2]==0){
+        while(true){
+	        var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
+            if(letter.join("")!=qks[qlst[0]]) break;
+        }
+    } else {
+        var letter = [...new Set([...qks[qlst[0]], ...qks[qlst[1]], ...qks[qlst[2]]])].sort(() => Math.random() - Math.random()); // suffule
     }
-    
     var opts = $("#opts");
     opts.innerHTML = "";
     for(let i=0; i<letter.length; i++){
@@ -86,8 +88,12 @@ function chkans(e){
     $("#gw").textContent=score[1];
 }
 
-function mode(quiet=false){
+function mode(t, quiet=false){
     if(!quiet && !confirm("此項操作會從新開始！你確定要繼續嗎？")){ return; } 
+    if(t>=2){
+        mode(score[2],true);
+        return;
+    }
     score=[0,0,t];
     rpt=[];
     nq();
@@ -144,7 +150,7 @@ function togglemenu(){
 </head>
 <body onload="init()">
     <div id="container">
-        <div id="menu"><div id="items">[<span onclick="mode()">重新開始</span>]</div><div id="toggle" onclick="togglemenu()">▼</div></div>
+        <div id="menu"><div id="items">[<span onclick="mode(2)">重新開始</span>] [<span onclick="mode(0)">易</span>] [<span onclick="mode(1)">難</span>]</div><div id="toggle" onclick="togglemenu()">▼</div></div>
         <div id="status"> 答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
         <div id="btndiv"><button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
         <div id="q">題目</div>
