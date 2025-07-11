@@ -45,7 +45,7 @@ function nq() {
 }
 
 function mode(t, quiet=false){
-    if(!quiet && !confirm("¦¹¶µ¾Ş§@·|±q·s¶}©l¡I§A½T©w­nÄ~Äò¶Ü¡H")){ return; } 
+    if(!quiet && !confirm("æ­¤é …æ“ä½œæœƒå¾æ–°é–‹å§‹ï¼ä½ ç¢ºå®šè¦ç¹¼çºŒå—ï¼Ÿ")){ return; } 
     if(t==0){
         qks = Object.keys(qs);
         qvs = Object.values(qs);
@@ -89,10 +89,10 @@ function togglemenu(){
     t = $("#toggle");
     if(o.style.display=="none"){
         o.style.display="";
-        t.textContent="¡¶"
+        t.textContent="â–²"
     } else {
         o.style.display="none";
-        t.textContent="¡¿"
+        t.textContent="â–¼"
     }
 }
 </script>
@@ -123,10 +123,10 @@ function togglemenu(){
 </head>
 <body onload="init()">
     <div id="container">
-      <div id="menu"><div id="items">[<span onclick="mode(2)">­«·s¶}©l</span>] [<span onclick="mode(0)">­^¿ï¤¤</span>] [<span onclick="mode(1)">¤¤¿ï­^</span>]</div><div id="toggle" onclick="togglemenu()">¡¿</div></div>
-        <div id="status"> µª¹ï<span id="gr">0</span>ÃD¡A¤wµª¿ù<span id="gw">0</span>¦¸¡C </div>
-        <div id="btndiv"><button id="btnNext" onclick="nq()" disabled="true">¤U¤@ÃD</button></div>
-        <div id="q">ÃD¥Ø</div>
+      <div id="menu"><div id="items">[<span onclick="mode(2)">é‡æ–°é–‹å§‹</span>] [<span onclick="mode(0)">è‹±é¸ä¸­</span>] [<span onclick="mode(1)">ä¸­é¸è‹±</span>]</div><div id="toggle" onclick="togglemenu()">â–¼</div></div>
+        <div id="status"> ç­”å°<span id="gr">0</span>é¡Œï¼Œå·²ç­”éŒ¯<span id="gw">0</span>æ¬¡ã€‚ </div>
+        <div id="btndiv"><button id="btnNext" onclick="nq()" disabled="true">ä¸‹ä¸€é¡Œ</button></div>
+        <div id="q">é¡Œç›®</div>
         <div id="opts"></div>
         <div id="ans"></div>
     </div>
