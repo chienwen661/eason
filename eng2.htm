@@ -28,11 +28,10 @@ function nq() {
         if (rpt.length==0 || !rpt.includes(qlst[0]) ) break; 
     }
     //var letter = [...new Set([...qks[qlst[0]], ...qks[qlst[1]], ...qks[qlst[2]]])].sort(() => Math.random() - Math.random()); // suffule
-    //while(true){
-	    var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
-        //if(letter.join("")!=qks[qlst[0]]) break;
-        $("#debug").textContent=letter.join("") + qks[qlst[0]];    
-    //}
+    while(true){
+	var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
+        if(letter.join("")!=qks[qlst[0]]) break;
+    }
     
     var opts = $("#opts");
     opts.innerHTML = "";
