@@ -27,7 +27,7 @@ function nq() {
         qlst=qlst.sort(() => Math.random() - Math.random()); // suffule
         if (rpt.length==0 || !rpt.includes(qlst[0]) ) break; 
     }
-    if(status[2]==0){
+    if(score[2]==0){
         while(true){
 	        var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
             if(letter.join("")!=qks[qlst[0]]) break;
@@ -119,7 +119,7 @@ function togglemenu(){
     #container { width:90%; font-size:24px; font-family:Georgia; }
     #container div {padding:10px; margin:10px;}
     #menu { font-size:0.5em; float:right;}
-    #menu #items, #menu #toggle { display:inline;}
+    #menu #items, #menu #toggle { display:inline; cursor:hand; }
     #btndiv { float:right; }
     #q { color:blue; font-size:2em; }
     #t { font-size:2em; border:3px green solid; border-radius:20px; height:1em; }
