@@ -27,8 +27,9 @@ function nq() {
         qlst=qlst.sort(() => Math.random() - Math.random()); // suffule
         if (rpt.length==0 || !rpt.includes(qlst[0]) ) break; 
     }
-    var letter = [...new Set([...qks[qlst[0]], ...qks[qlst[1]], ...qks[qlst[2]]])].sort(() => Math.random() - Math.random()); // suffule
-    
+    //var letter = [...new Set([...qks[qlst[0]], ...qks[qlst[1]], ...qks[qlst[2]]])].sort(() => Math.random() - Math.random()); // suffule
+    var letter = [...new Set([...qks[qlst[0]])].sort(() => Math.random() - Math.random()); 
+	
     var opts = $("#opts");
     opts.innerHTML = "";
     for(let i=0; i<letter.length; i++){
