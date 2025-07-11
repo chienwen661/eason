@@ -38,7 +38,8 @@ var qs={
     "coat":"大衣",
     "boot":"靴子",
     "computer":"電腦",
-    "eason":"昱瀚"
+    "seventeen":"十七",
+    "Eason":"陳昱瀚"
 };
 
 var qks = Object.keys(qs);
