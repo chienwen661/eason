@@ -30,7 +30,7 @@ function speak(){
     let utterance = new SpeechSynthesisUtterance(spk);
     utterance.voice = voices[0]; // Choose a specific voice
     utterance.pitch=1;  // 0 ~ 2
-    utterance.rate=0.5;   // 0.1 ~ 2 比較不會出問題
+    utterance.rate=1;   // 0.1 ~ 2 比較不會出問題
     utterance.volume=1; // 0 ~ 1
     synth.speak(utterance);
 }
