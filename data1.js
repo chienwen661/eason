@@ -43,10 +43,10 @@ var qs={
     "phone":"電話",
     "yellow":"黃色",
     "lemon":"檸檬",
-    "baseball":"棒球",
+    "baseball":"棒球","page":"頁","carrot":"紅蘿蔔","mango":"芒果","pea":"豌豆","sister":"姊妹",
     "eason":"陳昱瀚"
 };
-
+var qs = qs.slice(40).concate(qs[3],qs[6],qs[4],qs[32],qs[35],qs[38]);
 var qks = Object.keys(qs);
 var qvs = Object.values(qs);
 var qlst = Array.from({ length: qks.length }, (v, k) => k ); // [0,1,2,3,...,9]
