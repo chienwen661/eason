@@ -79,7 +79,7 @@ var qs={
     "sister":"姊妹",
     "eason":"陳昱瀚"
 };
-var qs = qs.slice(40).concate(qs[3],qs[6],qs[4],qs[32],qs[35],qs[38]);
+
 var qks = Object.keys(qs);
 var qvs = Object.values(qs);
 var qlst = Array.from({ length: qks.length }, (v, k) => k ); // [0,1,2,3,...,9]
