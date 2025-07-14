@@ -4,19 +4,35 @@
 <script>
 const ar=document.createElement("audio");
 const aw=document.createElement("audio");
+const synth = window.speechSynthesis;
+const voices = synth.getVoices();
 const _n = 4;
 var score = [0,0,0]; // corrent, wrong, mode
 var rpt=[];
 var redo=[];
+var spk="";
 
 function $(o){ return document.querySelector(o); }
 function $$(o){ return document.querySelectorAll(o); }
 
 function init(){
-    mode(0,true);
     aw.src="audio/error-04-199275.mp3";
     ar.src="audio/bell-172780.mp3";
-    $("#items").style.display="none";
+    aw.volume = 0.5;
+    ar.volume = 0.5;
+    $("#qs").textContent=qks.length;
+    mode(0,true);
+}
+
+function speak(){
+    if (!spk || synth.speaking){ return false; }
+
+    let utterance = new SpeechSynthesisUtterance(spk);
+    utterance.voice = voices[0]; // Choose a specific voice
+    utterance.pitch=1;  // 0 ~ 2
+    utterance.rate=0.5;   // 0.1 ~ 2 比較不會出問題
+    utterance.volume=1; // 0 ~ 1
+    synth.speak(utterance);
 }
 
 function nq() {
@@ -33,7 +49,7 @@ function nq() {
     for(let i=0; i<_n; i++){
         let newopt = document.createElement("div");
         newopt.classList.add("opt");
-	newopt.classList.add("no-select");
+        newopt.classList.add("no-select");
         newopt.textContent=qvs[ops[i]];
         newopt.addEventListener('click', chkans);
         if(ops[i]==qlst[0]){ newopt.classList.add("right"); }
@@ -41,6 +57,7 @@ function nq() {
     }
     
     $("#q").textContent=qks[qlst[0]];
+    spk=(score[2]==0)?qks[qlst[0]]:qvs[qlst[0]];
 
     rpt.push(qlst[0]);
     if(rpt.length==qks.length){ rpt = []; }
@@ -55,8 +72,7 @@ function mode(t, quiet=false){
         qks = Object.values(qs);
         qvs = Object.keys(qs);
     } else {
-        mode(score[2],true);
-        return;
+        t = score[2];
     }
     score=[0,0,t];
     rpt=[];
@@ -113,8 +129,9 @@ function showredo(){
     #opts .opt:hover { border:3px black solid; }
     #opts .right { }
     #ans {display:none;}
-    #btnNext { padding:10px; font-size:1em; }
+    #btnNext, #btnPlay { padding:10px; font-size:1em; }
     #debug { white-space:pre; }
+
     .no-select {
         -webkit-user-select: none; /* Safari */
         -moz-user-select: none;    /* Firefox */
@@ -127,7 +144,7 @@ function showredo(){
     .st1{fill:#FF0000;}
     @media (orientation: portrait){
   		#container { width:100%; font-size:56px; }
-        #opts .opt { margin:20px; padding:20px; font-size:1.5em; }
+        #opts .opt { margin:20px; padding:20px; font-size:2em; }
   		svg { width:60px; height:60px; }
     }
 </style>
@@ -135,9 +152,9 @@ function showredo(){
 </head>
 <body onload="init()">
     <div id="container">
-      <div id="menu"><div id="items">[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">英選中</span>]&nbsp;&nbsp;[<span onclick="mode(1)">中選英</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]</div><div id="toggle" onclick="togglemenu()">≡</div></div>
+      <div id="menu"><div id="items"><span id="qs"></span>[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">英選中</span>]&nbsp;&nbsp;[<span onclick="mode(1)">中選英</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]</div><div id="toggle" onclick="togglemenu()">≡</div></div>
         <div id="status"> 答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
-        <div id="btndiv"><button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
+        <div id="btndiv"><button id="btnPlay" onclick="speak()">播放</button>&nbsp;&nbsp;<button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
         <div id="q">題目</div>
         <div id="opts"></div>
         <div id="ans"></div>
