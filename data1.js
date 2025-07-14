@@ -51,6 +51,34 @@ var qs={
     "sister":"姊妹",
     "eason":"陳昱瀚"
 };
+
+var qs={
+    "sunday":"星期日",
+    "monday":"星期一",
+    "tuesday":"星期二",
+    "wednesday":"星期三",
+    "thursday":"星期四",
+    "friday":"星期五",
+    "saturday":"星期六",
+    "cherry":"櫻桃",
+    "chocolate":"巧克力",
+    "sandwich":"三明治",
+    "volleyball":"排球",
+    "friend":"朋友",
+    "airplane":"飛機",
+    "computer":"電腦",
+    "rabbit":"兔子",
+    "phone":"電話",
+    "yellow":"黃色",
+    "lemon":"檸檬",
+    "baseball":"棒球",
+    "page":"頁",
+    "carrot":"紅蘿蔔",
+    "mango":"芒果",
+    "pea":"豌豆",
+    "sister":"姊妹",
+    "eason":"陳昱瀚"
+};
 var qs = qs.slice(40).concate(qs[3],qs[6],qs[4],qs[32],qs[35],qs[38]);
 var qks = Object.keys(qs);
 var qvs = Object.values(qs);
