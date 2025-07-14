@@ -33,6 +33,7 @@ function nq() {
     for(let i=0; i<_n; i++){
         let newopt = document.createElement("div");
         newopt.classList.add("opt");
+	newopt.classList.add("no-select");
         newopt.textContent=qvs[ops[i]];
         newopt.addEventListener('click', chkans);
         if(ops[i]==qlst[0]){ newopt.classList.add("right"); }
@@ -113,7 +114,13 @@ function showredo(){
     #opts .right { }
     #ans {display:none;}
     #btnNext { padding:10px; font-size:1em; }
-  
+    .no-select {
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none;    /* Firefox */
+        -ms-user-select: none;    /* IE10+ */
+        user-select: none;       /* Standard */
+    } 
+
     svg { width:25px; height:25px; }
     .st0{fill:#0000FF;}
     .st1{fill:#FF0000;}
