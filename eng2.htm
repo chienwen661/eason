@@ -8,7 +8,8 @@ const _n = 4;
 var score = [0,0,0]; // corrent, wrong, mode
 var rpt=[];
 var redo=[];
-
+var qn="";
+	
 function $(o){ return document.querySelector(o); }
 function $$(o){ return document.querySelectorAll(o); }
 
@@ -49,7 +50,7 @@ function nq() {
     
     $("#q").textContent=qvs[qlst[0]];
     $("#ans").textContent=qks[qlst[0]];
-
+    qn=qvs[qlst[0]];
     rpt.push(qlst[0]);
     if(rpt.length==qks.length){ rpt = []; }
 }
@@ -84,7 +85,7 @@ function chkans(e){
         score[1]++;
         aw.play();
         aw.currentTime=0;
-        if(!redo.includes($("#q").textContent)){ redo.push($("#q").textContent); }
+        if(!redo.includes(qn){ redo.push(qn); }
     }
     $("#gr").textContent=score[0];
     $("#gw").textContent=score[1];
