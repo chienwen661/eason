@@ -39,6 +39,11 @@ var qs={
     "boot":"靴子",
     "computer":"電腦",
     "seventeen":"十七",
+    "rabbit":"兔子",
+    "phone":"電話",
+    "yellow":"黃色",
+    "lemon":"檸檬",
+    "baseball":"棒球",
     "eason":"陳昱瀚"
 };
 
