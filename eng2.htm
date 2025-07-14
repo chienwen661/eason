@@ -74,7 +74,7 @@ function chkans(e){
         t.appendChild($("#svg_check").cloneNode(true));
         score[0]++;
         ar.play();
-	    ar.currentTime=0;
+	ar.currentTime=0;
         $$(".opt").forEach((b) => { b.removeEventListener('click',spell); });
         $$("button").forEach((b) => { b.disabled=true; });
         $("#btnNext").disabled=false;
@@ -104,13 +104,10 @@ function mode(t, quiet=false){
 
 function togglemenu(){
     o = $("#items");
-    t = $("#toggle");
     if(o.style.display=="none"){
         o.style.display="";
-        t.textContent="▲"
     } else {
         o.style.display="none";
-        t.textContent="▼"
     }
 }
 </script>
@@ -150,7 +147,7 @@ function togglemenu(){
 </head>
 <body onload="init()">
     <div id="container">
-        <div id="menu"><div id="items">[<span onclick="mode(2)">重新開始</span>] [<span onclick="mode(0)">易</span>] [<span onclick="mode(1)">難</span>]</div><div id="toggle" onclick="togglemenu()">▼</div></div>
+        <div id="menu"><div id="items">[<span onclick="mode(2)">重新開始</span>] [<span onclick="mode(0)">易</span>] [<span onclick="mode(1)">難</span>]</div><div id="toggle" onclick="togglemenu()">≡</div></div>
         <div id="status"> 答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
         <div id="btndiv"><button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
         <div id="q">題目</div>
