@@ -2,20 +2,12 @@
 <head>
 <script src="data1.js"></script>
 <script>
-const ar=document.createElement("audio");
-const aw=document.createElement("audio");
-const synth = window.speechSynthesis;
-const voices = synth.getVoices();
 const _n = 4;
 var score = [0,0,0]; // corrent, wrong, mode
 var rpt=[];
 var redo=[];
-var spk="";
 var qn="";
 	
-function $(o){ return document.querySelector(o); }
-function $$(o){ return document.querySelectorAll(o); }
-
 function init(){
     aw.src="audio/error-04-199275.mp3";
     ar.src="audio/bell-172780.mp3";
@@ -25,16 +17,6 @@ function init(){
     mode(0, true);
 }
 
-function speak(){
-    if (!spk || synth.speaking){ return false; }
-
-    let utterance = new SpeechSynthesisUtterance(spk);
-    utterance.voice = voices[0]; // Choose a specific voice
-    utterance.pitch=1;  // 0 ~ 2
-    utterance.rate=1;   // 0.1 ~ 2 比較不會出問題
-    utterance.volume=1; // 0 ~ 1
-    synth.speak(utterance);
-}
 
 function nq() {
     $$("button").forEach((b) => { b.disabled=false; });
@@ -48,7 +30,7 @@ function nq() {
     }
     if(score[2]==0){
         while(true){
-	        var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
+            var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
             if(letter.join("")!=qks[qlst[0]]) break;
         }
     } else {
@@ -133,6 +115,13 @@ function togglemenu(){
 function showredo(){
     $("#debug").textContent = redo.join("\n");
 }
+function chds(){
+    if(!confirm("此項操作會從新開始！你確定要繼續嗎？")){ return; } 
+    qds = (qds+1)%2;
+    _chds(qds);
+    $("#qs").textContent=qks.length;
+    mode(2, true);
+}
 </script>
 <style>
     body { overscroll-behavior-y: contain; touch-action: manipulation; }
@@ -171,7 +160,7 @@ function showredo(){
 </head>
 <body onload="init()">
     <div id="container">
-        <div id="menu"><div id="items"><span id="qs"></span></span>[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">易</span>]&nbsp;&nbsp;[<span onclick="mode(1)">難</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]</div><div id="toggle" onclick="togglemenu()">≡</div></div>
+        <div id="menu"><div id="items"><span id="qs"></span></span>[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">易</span>]&nbsp;&nbsp;[<span onclick="mode(1)">難</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]&nbsp;&nbsp;[<span onclick="chds()">ds</span>]</div><div id="toggle" onclick="togglemenu()">≡</div></div>
         <div id="status"> 答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
         <div id="btndiv"><button id="btnPlay" onclick="speak()">播放</button>&nbsp;&nbsp;<button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
         <div id="q">題目</div>

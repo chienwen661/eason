@@ -2,18 +2,10 @@
 <head>
 <script src="data1.js"></script>
 <script>
-const ar=document.createElement("audio");
-const aw=document.createElement("audio");
-const synth = window.speechSynthesis;
-const voices = synth.getVoices();
 const _n = 4;
 var score = [0,0,0]; // corrent, wrong, mode
 var rpt=[];
 var redo=[];
-var spk="";
-
-function $(o){ return document.querySelector(o); }
-function $$(o){ return document.querySelectorAll(o); }
 
 function init(){
     aw.src="audio/error-04-199275.mp3";
@@ -22,17 +14,6 @@ function init(){
     ar.volume = 0.5;
     $("#qs").textContent=qks.length;
     mode(0,true);
-}
-
-function speak(){
-    if (!spk || synth.speaking){ return false; }
-
-    let utterance = new SpeechSynthesisUtterance(spk);
-    utterance.voice = voices[0]; // Choose a specific voice
-    utterance.pitch=1;  // 0 ~ 2
-    utterance.rate=1;   // 0.1 ~ 2 比較不會出問題
-    utterance.volume=1; // 0 ~ 1
-    synth.speak(utterance);
 }
 
 function nq() {

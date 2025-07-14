@@ -52,7 +52,8 @@ var qs={
     "eason":"陳昱瀚"
 };
 
-var qs={
+//==============================================
+var qs1={
     "sunday":"星期日",
     "monday":"星期一",
     "tuesday":"星期二",
@@ -80,6 +81,49 @@ var qs={
     "eason":"陳昱瀚"
 };
 
-var qks = Object.keys(qs);
-var qvs = Object.values(qs);
-var qlst = Array.from({ length: qks.length }, (v, k) => k ); // [0,1,2,3,...,9]
+
+//===============================================
+const ar=document.createElement("audio");
+const aw=document.createElement("audio");
+const synth = window.speechSynthesis;
+const voices = synth.getVoices();
+var spk="";
+
+var qks = [];
+var qvs = [];
+var qlst = [];
+var qds=0;
+
+function $(o){ return document.querySelector(o); }
+function $$(o){ return document.querySelectorAll(o); }
+
+function speak(){
+    if (!spk || synth.speaking){ return false; }
+
+    let utterance = new SpeechSynthesisUtterance(spk);
+    utterance.voice = voices[0]; // Choose a specific voice
+    utterance.pitch=1;  // 0 ~ 2
+    utterance.rate=1;   // 0.1 ~ 2 比較不會出問題
+    utterance.volume=1; // 0 ~ 1
+    synth.speak(utterance);
+}
+
+function _chds(m){
+
+  if( m==0 ){
+      qks = Object.keys(qs);
+      qvs = Object.values(qs);
+  } else if(m==1) {
+      qks = Object.keys(qs1);
+      qvs = Object.values(qs1);
+  }
+  qlst = Array.from({ length: qks.length }, (v, k) => k ); // [0,1,2,3,...,9]
+
+}
+
+_chds(qds);
+
+
+
+//console.log(qks);
+//console.log(qvs);
