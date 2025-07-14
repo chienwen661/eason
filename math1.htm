@@ -1,13 +1,12 @@
 <html lang="zh-Hant-TW">
 <head>
-<script src="data1.js"></script>
 <script>
 const ar=document.createElement("audio");
 const aw=document.createElement("audio");
 const _n = 4;
 var score = [0,0,0]; // corrent, wrong, mode
-var rpt=[];
 var redo=[];
+var qn = [0, 0];
 
 function $(o){ return document.querySelector(o); }
 function $$(o){ return document.querySelectorAll(o); }
@@ -15,7 +14,21 @@ function $$(o){ return document.querySelectorAll(o); }
 function init(){
     aw.src="audio/error-04-199275.mp3";
     ar.src="audio/bell-172780.mp3";
-    mode(0, true);
+    digits();
+    mode(3, true);
+}
+
+function digits(){
+    var opts = $("#opts");
+    opts.innerHTML = "";
+    for(let i=0; i<10; i++){
+        let newopt = document.createElement("div");
+        newopt.classList.add("opt");
+        newopt.classList.add("no-select");
+        newopt.textContent=i;
+        newopt.addEventListener('click', spell);
+        opts.appendChild(newopt); 
+    }
 }
 
 function nq() {
@@ -23,45 +36,36 @@ function nq() {
     $("#btnNext").disabled=true;
 
     spell_cls();
+    $$("#q svg").forEach((b) => { b.remove(); });
 
-    while(true){
-        qlst=qlst.sort(() => Math.random() - Math.random()); // suffule
-        if (rpt.length==0 || !rpt.includes(qlst[0]) ) break; 
+    if(redo.length>0 && Math.random()<0.3){
+        qqn = redo[Math.floor(Math.random()*redo.length)];
+        var d1 = qqn[0];
+        var d2 = qqn[1];
+        //$("#debug").textContent+=d1+"x"+d2+"\n";
+    }else{
+        var d1 = Math.floor(2+Math.random()*8);
+        var d2 = Math.floor(2+Math.random()*8);
     }
-    if(score[2]==0){
-        while(true){
-	        var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
-            if(letter.join("")!=qks[qlst[0]]) break;
-        }
-    } else {
-        var letter = [...new Set([...qks[qlst[0]], ...qks[qlst[1]], ...qks[qlst[2]]])].sort(() => Math.random() - Math.random()); // suffule
-    }
-    var opts = $("#opts");
-    opts.innerHTML = "";
-    for(let i=0; i<letter.length; i++){
-        let newopt = document.createElement("div");
-        newopt.classList.add("opt");
-        newopt.classList.add("no-select");
-        newopt.textContent=letter[i];
-        newopt.addEventListener('click', spell);
-        opts.appendChild(newopt); 
-    }
-    
-    $("#q").textContent=qvs[qlst[0]];
-    $("#ans").textContent=qks[qlst[0]];
+    qn = [d1, d2];
 
-    rpt.push(qlst[0]);
-    if(rpt.length==qks.length){ rpt = []; }
+    $("#n1").textContent = d1;
+    $("#n2").textContent = d2;
+    $("#n3").textContent = d1*d2;
+    $("#ans").textContent = $("#n"+score[2]).textContent;
+    $("#n"+score[2]).textContent="　";
 }
 
 function spell(e){
+    if(!$("#btnNext").disabled){ return; }
+    let t = $("#t"); 
+    if( t.textContent.length>=2 ){ return; }
     opt = e.target;
-    letter = opt.textContent;
-    $("#t").textContent+=letter;
+    num = opt.textContent;
+    t.textContent+=num;
 }
 
 function spell_back(){
-    let t = $("#t"); 
     $("#t").textContent=$("#t").textContent.slice(0,-1);
 }
 
@@ -71,12 +75,12 @@ function spell_cls(){
 
 function chkans(e){
     var t = $("#t");
-    if (t.textContent== $("#ans").textContent){
+    if (t.textContent == $("#ans").textContent){
         t.appendChild($("#svg_check").cloneNode(true));
         score[0]++;
         ar.play();
-        ar.currentTime=0;
-        $$(".opt").forEach((b) => { b.removeEventListener('click',spell); });
+	    ar.currentTime=0;
+        //$$(".opt").forEach((b) => { b.removeEventListener('click',spell); });
         $$("button").forEach((b) => { b.disabled=true; });
         $("#btnNext").disabled=false;
     } else {
@@ -84,7 +88,7 @@ function chkans(e){
         score[1]++;
         aw.play();
         aw.currentTime=0;
-        if(!redo.includes($("#q").textContent)){ redo.push($("#q").textContent); }
+        if(!redo.includes(qn)){ redo.push(qn); }
     }
     $("#gr").textContent=score[0];
     $("#gw").textContent=score[1];
@@ -92,17 +96,14 @@ function chkans(e){
 
 function mode(t, quiet=false){
     if(!quiet && !confirm("此項操作會從新開始！你確定要繼續嗎？")){ return; } 
-    if(t>=2){
-        mode(score[2],true);
-        return;
-    }
-    score=[0,0,t];
-    rpt=[];
-    redo=[];
+    if( t>0 ){ score=[0,0,t]; }
+    $$("#q span").forEach((b) => { b.className=""; });
+    $("#n"+score[2]).classList.add("qh");
     nq();
     togglemenu();
     $("#gr").textContent=score[0];
     $("#gw").textContent=score[1];
+    $("#debug").textContent="";
 }
 
 function togglemenu(){
@@ -113,26 +114,29 @@ function togglemenu(){
         o.style.display="none";
     }
 }
+
 function showredo(){
     $("#debug").textContent = redo.join("\n");
 }
 </script>
 <style>
     body { overscroll-behavior-y: contain; touch-action: manipulation; }
-    #container { width:90%; font-size:24px; font-family:Georgia; }
+    #container { width:90%; font-size:24px; font-family:Times New Roman; }
     #container div {padding:10px; margin:10px;}
     #menu { font-size:0.5em; float:right;}
     #menu #items, #menu #toggle { display:inline; cursor:hand; }
     #btndiv { float:right; }
     #q { color:blue; font-size:2em; }
+    #q .qh { border:3px black solid; }
     #t { font-size:2em; border:3px green solid; border-radius:20px; height:1em; }
     #opts { display:flex; flex-wrap:wrap; }
-    #opts .opt { font-size:2em; font-weight:bold; font-family:Courier New; color:green; border:3px green solid; border-radius:10px; cursor:hand; display:flex; }
+    #opts .opt { font-size:2em; font-weight:bold; color:green; border:3px green solid; border-radius:10px; cursor:hand; display:flex; }
     #opts .opt:hover { border:3px black solid; }
     #opts .right { }
     #ans {display:none;}
     #btnNext, #btnBack, #btnChk, #btnCls { padding:10px; font-size:1em; }
- 
+    #debug { white-space:pre; } 
+
     .no-select {
         -webkit-user-select: none; /* Safari */
         -moz-user-select: none;    /* Firefox */
@@ -144,19 +148,19 @@ function showredo(){
     .st0{fill:#0000FF;}
     .st1{fill:#FF0000;}
     @media (orientation: portrait){
-        #container { width:100%; font-size:56px; }
-        #opts .opt { margin:20px; padding:20px; font-size:2em; }
-        svg { width:60px; height:60px; }
+  		#container { width:100%; font-size:56px; }
+        #opts .opt { margin:20px; padding:20px; font-size:1.5em; }
+  		svg { width:60px; height:60px; }
     }
 </style>
 
 </head>
 <body onload="init()">
     <div id="container">
-        <div id="menu"><div id="items">[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">易</span>]&nbsp;&nbsp;[<span onclick="mode(1)">難</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]</div><div id="toggle" onclick="togglemenu()">≡</div></div>
+        <div id="menu"><div id="items">[<span onclick="mode(0)">重新開始</span>]&nbsp;&nbsp; [<span onclick="mode(3)">0x0=?</span>]&nbsp;&nbsp; [<span onclick="mode(2)">0x?=0</span>]&nbsp;&nbsp; [<span onclick="mode(1)">?x0=0</span>]&nbsp;&nbsp; [<span onclick="showredo()">err</span>]</div><div id="toggle" onclick="togglemenu()">≡</div></div>
         <div id="status"> 答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
         <div id="btndiv"><button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
-        <div id="q">題目</div>
+        <div id="q"><span id="n1"></span> × <span id="n2"></span> ＝ <span id="n3"></span></div>
         <div id="t"></div>
         <div id="tm"><button id="btnCls" onclick="spell_cls()">清除</button>&nbsp;&nbsp;&nbsp;<button id="btnBack" onclick="spell_back()">倒退</button>&nbsp;&nbsp;&nbsp;<button id="btnChk" onclick="chkans()">送出</button></div>
         <div id="opts"></div>
