@@ -2,11 +2,15 @@
 <head>
 <script src="data1.js"></script>
 <script>
-const _n = 4;
-var score = [0,0,0]; // corrent, wrong, mode
+
+var qz={
+    correct:0,
+    wrong:0,
+    mode:0,
+    eng:""
+}
 var rpt=[];
 var redo=[];
-var qn="";
 	
 function init(){
     aw.src="audio/error-04-199275.mp3";
@@ -28,7 +32,7 @@ function nq() {
         qlst=qlst.sort(() => Math.random() - Math.random()); // suffule
         if (rpt.length==0 || !rpt.includes(qlst[0]) ) break; 
     }
-    if(score[2]==0){
+    if(qz.mode==0){
         while(true){
             var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
             if(letter.join("")!=qks[qlst[0]]) break;
@@ -49,7 +53,7 @@ function nq() {
     
     $("#q").textContent=qvs[qlst[0]];
     $("#ans").textContent=qks[qlst[0]];
-    qn=qvs[qlst[0]];
+    qz.eng=qvs[qlst[0]];
     spk=qks[qlst[0]];
 
     rpt.push(qlst[0]);
@@ -75,7 +79,7 @@ function chkans(e){
     var t = $("#t");
     if (t.textContent== $("#ans").textContent){
         t.appendChild($("#svg_check").cloneNode(true));
-        score[0]++;
+        qz.correct++;
         ar.play();
         ar.currentTime=0;
         $$(".opt").forEach((b) => { b.removeEventListener('click',spell); });
@@ -83,35 +87,30 @@ function chkans(e){
         $("#btnNext").disabled=false;
     } else {
         $("#q").appendChild($("#svg_cross").cloneNode(true));
-        score[1]++;
+        qz.wrong++;
         aw.play();
         aw.currentTime=0;
-        if(!redo.includes(qn)){ redo.push(qn); }
+        if(!redo.includes(qz.eng)){ redo.push(qz.eng); }
     }
-    $("#gr").textContent=score[0];
-    $("#gw").textContent=score[1];
+    $("#gr").textContent=qz.correct;
+    $("#gw").textContent=qz.wrong;
 }
 
 function mode(t, quiet=false){
+    // t    0: easy     1: difficult    2: restart
     if(!quiet && !confirm("此項操作會從新開始！你確定要繼續嗎？")){ return; } 
-    if(t>=2){ t=score[2]; }
-    score=[0,0,t];
+    if(t==0 || t==1){ qz.mode=t; }
+    qz.correct = 0;
+    qz.wrong = 0;
     rpt=[];
     redo=[];
     nq();
-    togglemenu();
-    $("#gr").textContent=score[0];
-    $("#gw").textContent=score[1];
+    toggle("#items");
+    $("#gr").textContent=qz.correct;
+    $("#gw").textContent=qz.wrong;
+    $("#debug").textContent="";
 }
 
-function togglemenu(){
-    o = $("#items");
-    if(o.style.display=="none"){
-        o.style.display="";
-    } else {
-        o.style.display="none";
-    }
-}
 function showredo(){
     $("#debug").textContent = redo.join("\n");
 }
@@ -160,7 +159,7 @@ function chds(){
 </head>
 <body onload="init()">
     <div id="container">
-        <div id="menu"><div id="items"><span id="qs"></span></span>[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">易</span>]&nbsp;&nbsp;[<span onclick="mode(1)">難</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]&nbsp;&nbsp;[<span onclick="chds()">ds</span>]</div><div id="toggle" onclick="togglemenu()">≡</div></div>
+        <div id="menu"><div id="items"><span id="qs"></span></span>[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">易</span>]&nbsp;&nbsp;[<span onclick="mode(1)">難</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]&nbsp;&nbsp;[<span onclick="chds()">ds</span>]</div><div id="toggle" onclick='toggle("#items")'>≡</div></div>
         <div id="status"> 答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
         <div id="btndiv"><button id="btnPlay" onclick="speak()">播放</button>&nbsp;&nbsp;<button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
         <div id="q">題目</div>

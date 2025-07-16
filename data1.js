@@ -96,6 +96,7 @@ var qds=0;
 
 function $(o){ return document.querySelector(o); }
 function $$(o){ return document.querySelectorAll(o); }
+function toggle(o){ if(typeof o==='string'){ o=$(o); } o.style.display=(o.style.display=="none")?"":"none"; }
 
 function speak(){
     if (!spk || synth.speaking){ return false; }
