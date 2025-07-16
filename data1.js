@@ -49,17 +49,20 @@ var qs={
     "mango":"芒果",
     "pea":"豌豆",
     "sister":"姊妹",
-    "eason":"陳昱瀚"
+    "pants":"長褲",
+    "jacket":"夾克",
+    "kite":"風箏",
+    "Janurary":"一月",
+    "spoon":"湯匙",
+    "fox":"狐狸",
+    "ham":"火腿",
+    "Eason":"陳昱瀚"
 };
 
 //==============================================
 var qs1={
-    "sunday":"星期日",
-    "monday":"星期一",
-    "tuesday":"星期二",
     "wednesday":"星期三",
     "thursday":"星期四",
-    "friday":"星期五",
     "saturday":"星期六",
     "cherry":"櫻桃",
     "chocolate":"巧克力",
@@ -70,15 +73,18 @@ var qs1={
     "computer":"電腦",
     "rabbit":"兔子",
     "phone":"電話",
-    "yellow":"黃色",
     "lemon":"檸檬",
     "baseball":"棒球",
-    "page":"頁",
     "carrot":"紅蘿蔔",
     "mango":"芒果",
-    "pea":"豌豆",
-    "sister":"姊妹",
-    "eason":"陳昱瀚"
+    "pants":"長褲",
+    "jacket":"夾克",
+    "kite":"風箏",
+    "January":"一月",
+    "spoon":"湯匙",
+    "fox":"狐狸",
+    "ham":"火腿",
+    "Eason":"陳昱瀚"
 };
 
 
