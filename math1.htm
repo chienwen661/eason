@@ -3,7 +3,7 @@
 <script>
 const ar=document.createElement("audio");
 const aw=document.createElement("audio");
-const dss=[[2,9,2,9],[2,9,10,22]]; // dataset
+const dss=[[2,9,2,9],[2,9,10,99]]; // dataset
 
 //var qz = [0, 0, 0, 0 ,0, 0, 2]; // corrent, wrong, mode, q1, q2, ds no, max ans len
 var qz={
@@ -125,6 +125,7 @@ function mode(t, quiet=false){
 
     $$("#q span").forEach((b) => { b.className=""; });
     $("#n"+qz.mode).classList.add("qh");
+    redo=[];
     nq();
     toggle("#items");
     $("#gr").textContent=qz.correct;
