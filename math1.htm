@@ -75,8 +75,7 @@ function spell(e){
     if(!$("#btnNext").disabled){ return; }
     let t = $("#t"); 
     if( t.textContent.length>=qz.ml ){ return; }
-    num = e.target.textContent;
-    t.textContent+=num;
+    t.textContent+=e.target.textContent;
 }
 
 function spell_back(){

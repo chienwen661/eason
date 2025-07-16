@@ -21,7 +21,10 @@ function init(){
     mode(0, true);
 }
 
+function chkstr(s1, s2){
+    s1.split()
 
+}
 function nq() {
     $$("button").forEach((b) => { b.disabled=false; });
     $("#btnNext").disabled=true;
@@ -32,13 +35,14 @@ function nq() {
         qlst=qlst.sort(() => Math.random() - Math.random()); // suffule
         if (rpt.length==0 || !rpt.includes(qlst[0]) ) break; 
     }
+    var letter=[];
     if(qz.mode==0){
         while(true){
-            var letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
-            if(letter.join("")!=qks[qlst[0]]) break;
+            letter = [...new Set([...qks[qlst[0]]])].sort(() => Math.random() - Math.random()); 
+            if(letter.join("")!=qks[qlst[0]] && letter.reverse().join("")!=qks[qlst[0]]) break;
         }
     } else {
-        var letter = [...new Set([...qks[qlst[0]], ...qks[qlst[1]], ...qks[qlst[2]]])].sort(() => Math.random() - Math.random()); // suffule
+        letter = [...new Set([...qks[qlst[0]], ...qks[qlst[1]], ...qks[qlst[2]]])].sort(() => Math.random() - Math.random()); // suffule
     }
     var opts = $("#opts");
     opts.innerHTML = "";
@@ -61,13 +65,12 @@ function nq() {
 }
 
 function spell(e){
-    opt = e.target;
-    letter = opt.textContent;
-    $("#t").textContent+=letter;
+    if(!$("#btnNext").disabled){ return; }
+    if( $("#t").textContent.length >= $("#ans").textContent.length+2 ){ return; }
+    $("#t").textContent+=e.target.textContent;
 }
 
 function spell_back(){
-    let t = $("#t"); 
     $("#t").textContent=$("#t").textContent.slice(0,-1);
 }
 
@@ -82,7 +85,7 @@ function chkans(e){
         qz.correct++;
         ar.play();
         ar.currentTime=0;
-        $$(".opt").forEach((b) => { b.removeEventListener('click',spell); });
+        //$$(".opt").forEach((b) => { b.removeEventListener('click',spell); });
         $$("button").forEach((b) => { b.disabled=true; });
         $("#btnNext").disabled=false;
     } else {
@@ -104,11 +107,11 @@ function mode(t, quiet=false){
     qz.wrong = 0;
     rpt=[];
     redo=[];
-    nq();
     toggle("#items");
     $("#gr").textContent=qz.correct;
     $("#gw").textContent=qz.wrong;
     $("#debug").textContent="";
+    nq();
 }
 
 function showredo(){
