@@ -3,9 +3,8 @@
 <script>
 const ar=document.createElement("audio");
 const aw=document.createElement("audio");
-const dss=[[2,9,2,9],[2,9,10,99]]; // dataset
+const dss=[[2,9,2,9],[2,9,10,99],[10,99,10,99]]; // dataset
 
-//var qz = [0, 0, 0, 0 ,0, 0, 2]; // corrent, wrong, mode, q1, q2, ds no, max ans len
 var qz={
     correct: 0,
     wrong: 0,
@@ -16,12 +15,8 @@ var qz={
     ml: 0
 };
 var redo=[];    // wrong ans
-//var qn = [0, 0];  // quiz set
 
-//var dr=drset[0];    // current dataset
-//var qds=0;  // dataset no
-//var ql=dr[1].toString().length+dr[3].toString().length; // max ans length
-
+function act(sp){ u = new URL(window.location.href); return u.searchParams.get(sp); }
 function $(o){ return document.querySelector(o); }
 function $$(o){ return document.querySelectorAll(o); }
 function toggle(o){ if(typeof o==='string'){ o=$(o); } o.style.display=(o.style.display=="none")?"":"none"; }
@@ -30,6 +25,7 @@ function init(){
     aw.src="audio/error-04-199275.mp3";
     ar.src="audio/bell-172780.mp3";
     digits();
+    qz.dsno = Number(act("ds"));
     mode(3, true);
 }
 
@@ -128,10 +124,10 @@ function mode(t, quiet=false){
     redo=[];
     nq();
     toggle("#items");
+    $("#gds").textContent=qz.dsno;
     $("#gr").textContent=qz.correct;
     $("#gw").textContent=qz.wrong;
-    //$("#debug").textContent="";
-    $("#debug").textContent=Object.values(qz).toString();
+    $("#debug").textContent="";
 }
 
 function showredo(){
@@ -157,8 +153,8 @@ function chds(n=2){
     #opts { display:flex; flex-wrap:wrap; }
     #opts .opt { font-size:3em; font-weight:bold; color:green; border:3px green solid; border-radius:10px; cursor:hand; display:flex; }
     #opts .opt:hover { border:3px black solid; }
-    #opts .right { }
     #ans {display:none;}
+    #gds {color:#eeccee; font-size:0.5em; }
     #btnNext, #btnBack, #btnChk, #btnCls { padding:10px; font-size:1em; }
     #debug { white-space:pre; } 
 
@@ -183,7 +179,7 @@ function chds(n=2){
 <body onload="init()">
     <div id="container">
         <div id="menu"><div id="items">[<span onclick="mode(0)">重新開始</span>]&nbsp;&nbsp; [<span onclick="mode(3)">0x0=?</span>]&nbsp;&nbsp; [<span onclick="mode(2)">0x?=0</span>]&nbsp;&nbsp; [<span onclick="mode(1)">?x0=0</span>]&nbsp;&nbsp; [<span onclick="showredo()">err</span>]&nbsp;&nbsp;[<span onclick="chds()">ds</span>]</div><div id="toggle" onclick='toggle("#items")'>≡</div></div>
-        <div id="status"> 答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
+        <div id="status"><span id="gds"></span>答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
         <div id="btndiv"><button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
         <div id="q"><span id="n1"></span> × <span id="n2"></span> ＝ <span id="n3"></span></div>
         <div id="t"></div>

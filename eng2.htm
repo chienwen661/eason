@@ -7,6 +7,7 @@ var qz={
     correct:0,
     wrong:0,
     mode:0,
+    dsno:0,
     eng:""
 }
 var rpt=[];
@@ -17,14 +18,11 @@ function init(){
     ar.src="audio/bell-172780.mp3";
     aw.volume = 0.5;
     ar.volume = 0.5;
-    $("#qs").textContent=qks.length;
+    qz.dsno=Number(act("ds"));
+    _chds(qz.dsno);
     mode(0, true);
 }
 
-function chkstr(s1, s2){
-    s1.split()
-
-}
 function nq() {
     $$("button").forEach((b) => { b.disabled=false; });
     $("#btnNext").disabled=true;
@@ -111,6 +109,7 @@ function mode(t, quiet=false){
     $("#gr").textContent=qz.correct;
     $("#gw").textContent=qz.wrong;
     $("#debug").textContent="";
+    $("#gds").textContent=qz.dsno+"."+qks.length;
     nq();
 }
 
@@ -119,9 +118,8 @@ function showredo(){
 }
 function chds(){
     if(!confirm("此項操作會從新開始！你確定要繼續嗎？")){ return; } 
-    qds = (qds+1)%2;
-    _chds(qds);
-    $("#qs").textContent=qks.length;
+    qz.dsno = (qz.dsno+1)%2;
+    _chds(qz.dsno);
     mode(2, true);
 }
 </script>
@@ -137,8 +135,8 @@ function chds(){
     #opts { display:flex; flex-wrap:wrap; }
     #opts .opt { font-size:2em; font-weight:bold; font-family:Courier New; color:green; border:3px green solid; border-radius:10px; cursor:hand; display:flex; }
     #opts .opt:hover { border:3px black solid; }
-    #opts .right { }
     #ans {display:none;}
+    #gds {color:#eeccee; font-size:0.5em; }
     #btnNext, #btnPlay, #btnBack, #btnChk, #btnCls { padding:10px; font-size:1em; }
     #debug { white-space:pre; }
 	
@@ -162,8 +160,8 @@ function chds(){
 </head>
 <body onload="init()">
     <div id="container">
-        <div id="menu"><div id="items"><span id="qs"></span></span>[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">易</span>]&nbsp;&nbsp;[<span onclick="mode(1)">難</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]&nbsp;&nbsp;[<span onclick="chds()">ds</span>]</div><div id="toggle" onclick='toggle("#items")'>≡</div></div>
-        <div id="status"> 答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
+        <div id="menu"><div id="items">[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">易</span>]&nbsp;&nbsp;[<span onclick="mode(1)">難</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]&nbsp;&nbsp;[<span onclick="chds()">ds</span>]</div><div id="toggle" onclick='toggle("#items")'>≡</div></div>
+        <div id="status"><span id="gds"></span>答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
         <div id="btndiv"><button id="btnPlay" onclick="speak()">播放</button>&nbsp;&nbsp;<button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
         <div id="q">題目</div>
         <div id="t"></div>

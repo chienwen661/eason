@@ -52,7 +52,7 @@ var qs={
     "pants":"長褲",
     "jacket":"夾克",
     "kite":"風箏",
-    "Janurary":"一月",
+    "January":"一月",
     "spoon":"湯匙",
     "fox":"狐狸",
     "ham":"火腿",
@@ -98,11 +98,11 @@ var spk="";
 var qks = [];
 var qvs = [];
 var qlst = [];
-var qds=0;
 
 function $(o){ return document.querySelector(o); }
 function $$(o){ return document.querySelectorAll(o); }
 function toggle(o){ if(typeof o==='string'){ o=$(o); } o.style.display=(o.style.display=="none")?"":"none"; }
+function act(sp){ u = new URL(window.location.href); return u.searchParams.get(sp); }
 
 function speak(){
     if (!spk || synth.speaking){ return false; }
@@ -128,9 +128,7 @@ function _chds(m){
 
 }
 
-_chds(qds);
-
-
+//_chds(qds);
 
 //console.log(qks);
 //console.log(qvs);
