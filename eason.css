@@ -1,0 +1,107 @@
+body { 
+    overscroll-behavior-y: contain; 
+    /*touch-action: manipulation;*/
+    touch-action: pan-y;
+}
+#container { 
+    width:90%; 
+    font-size:24px; 
+    font-family:Georgia;
+}
+#container div {
+    padding:10px; 
+    margin:10px;
+}
+#menu { 
+    font-size:0.5em; 
+    float:right;
+}
+#menu #items, #menu #toggle { 
+    display:inline; 
+    cursor:hand; 
+}
+#btndiv { 
+    float:right; 
+}
+#btndiv button, #tm button { 
+    padding:10px; 
+    font-size:1em; 
+}
+#q { 
+    color:blue; 
+    font-size:2em; 
+}
+#t { 
+    font-size:2em; 
+    border:3px green solid; 
+    border-radius:20px; 
+    height:1em; 
+}
+/*
+#opts { 
+    display:flex; 
+    flex-wrap:wrap; 
+}
+#opts .opt { 
+    font-size:3em; 
+    font-weight:bold; 
+    display:flex; 
+    }
+*/
+#opts .opt { 
+    color:green; 
+    border:3px green solid; 
+    border-radius:10px; 
+    cursor:hand; 
+}
+#opts .opt:hover { 
+    border:3px black solid; 
+}
+#opts .break {
+    flex-basis: 100%; 
+    height:0;
+}
+#ans {
+    display:none;
+}
+#gds {
+    color:#eeccee; 
+    font-size:0.5em; 
+}
+#debug { 
+    white-space:pre; 
+}
+
+.no-select {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;    /* IE10+ */
+    user-select: none;       /* Standard */
+} 
+
+svg { 
+    width:25px; 
+    height:25px; 
+}
+.st0{
+    fill:#0000FF;
+}
+.st1{
+    fill:#FF0000;
+}
+
+@media (orientation: portrait){
+    #container { 
+        width:100%; 
+        font-size:56px; 
+    }
+    #opts .opt { 
+        margin:20px; 
+        padding:20px; 
+        font-size:2em; 
+    }
+    svg { 
+        width:60px; 
+        height:60px; 
+    }
+}

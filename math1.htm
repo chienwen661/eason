@@ -1,5 +1,6 @@
 <html lang="zh-Hant-TW">
 <head>
+    <link rel="stylesheet" type="text/css" href="eason.css"/>
 <script>
 const ar=document.createElement("audio");
 const aw=document.createElement("audio");
@@ -39,6 +40,11 @@ function digits(){
         newopt.textContent=i;
         newopt.addEventListener('click', spell);
         opts.appendChild(newopt); 
+        if(i==4){
+            let nb=document.createElement("div");
+            nb.classList.add("break")
+            opts.appendChild(nb); 
+        }
     }
 }
 
@@ -134,44 +140,21 @@ function showredo(){
     $("#debug").textContent = redo.join("\n");
 }
 
-function chds(n=2){
+function chds(n=999){
     if(!confirm("此項操作會從新開始！你確定要繼續嗎？")){ return; } 
-    qz.dsno = (n<2) ? n : (qz.dsno+1)%2;  
+    let m = dss.length;
+    qz.dsno = (n<m) ? n : (qz.dsno+1)%m;  
     mode(0, true);
 }
 </script>
 <style>
-    body { overscroll-behavior-y: contain; touch-action: manipulation; }
-    #container { width:90%; font-size:24px; font-family:Times New Roman; }
-    #container div {padding:10px; margin:10px;}
-    #menu { font-size:0.5em; float:right;}
-    #menu #items, #menu #toggle { display:inline; cursor:hand; }
-    #btndiv { float:right; }
-    #q { color:blue; font-size:2em; }
+    #container { font-family:Times New Roman; }
     #q .qh { border:3px black solid; }
-    #t { font-size:2em; border:3px green solid; border-radius:20px; height:1em; }
     #opts { display:flex; flex-wrap:wrap; }
-    #opts .opt { font-size:3em; font-weight:bold; color:green; border:3px green solid; border-radius:10px; cursor:hand; display:flex; }
-    #opts .opt:hover { border:3px black solid; }
-    #ans {display:none;}
-    #gds {color:#eeccee; font-size:0.5em; }
-    #btnNext, #btnBack, #btnChk, #btnCls { padding:10px; font-size:1em; }
-    #debug { white-space:pre; } 
+    #opts .opt { font-size:3em; font-weight:bold; display:flex; }
 
-    .no-select {
-        -webkit-user-select: none; /* Safari */
-        -moz-user-select: none;    /* Firefox */
-        -ms-user-select: none;    /* IE10+ */
-        user-select: none;       /* Standard */
-    } 
-
-    svg { width:25px; height:25px; }
-    .st0{fill:#0000FF;}
-    .st1{fill:#FF0000;}
     @media (orientation: portrait){
-  		#container { width:100%; font-size:56px; }
         #opts .opt { margin:20px; padding:20px; font-size:2em; }
-  		svg { width:60px; height:60px; }
     }
 </style>
 
