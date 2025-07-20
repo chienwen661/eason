@@ -72,6 +72,12 @@ var qs={
     "cat":"貓",
     "car":"車",
     "goodbye":"再見",
+    "June":"六月",
+    "July":"七月",
+    "autumn":"秋天",
+    "knife":"刀子",
+    "pizza":"披薩",
+    "violin":"小提琴",
     "Eason":"陳昱瀚"
 };
 
@@ -83,22 +89,15 @@ var qs1={
     "chocolate":"巧克力",
     "sandwich":"三明治",
     "volleyball":"排球",
-    "friend":"朋友",
     "airplane":"飛機",
     "computer":"電腦",
     "rabbit":"兔子",
-    "phone":"電話",
-    "lemon":"檸檬",
     "baseball":"棒球",
     "carrot":"紅蘿蔔",
-    "pants":"長褲",
-    "jacket":"夾克",
     "January":"一月",
     "February":"二月",
-    "eraser":"橡皮擦",
     "potato":"馬鈴薯",
     "March":"三月",
-    "brother":"兄弟",
     "strawberry":"草莓",
     "hot dog":"熱狗",
     "robot":"機器人",
@@ -108,6 +107,12 @@ var qs1={
     "cat":"貓",
     "car":"車",
     "goodbye":"再見",
+    "June":"六月",
+    "July":"七月",
+    "autumn":"秋天",
+    "knife":"刀子",
+    "pizza":"披薩",
+    "violin":"小提琴",
     "Eason":"陳昱瀚"
 };
 
