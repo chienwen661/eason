@@ -75,6 +75,8 @@ body {
 }
 #debug { 
     white-space:pre; 
+    height:5em;
+    overflow-y: auto;
 }
 
 .no-select {
