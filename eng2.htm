@@ -24,7 +24,7 @@ function init(){
     mode(0, true);
 }
 
-function nq() {
+function nq(lc="") {
     $$("button").forEach((b) => { b.disabled=false; });
     $("#btnNext").disabled=true;
 
@@ -34,6 +34,13 @@ function nq() {
         qlst=qlst.sort(() => Math.random() - Math.random()); // suffule
         if (rpt.length==0 || !rpt.includes(qlst[0]) ) break; 
     }
+    if(lc!="" && qks.includes(lc)){   
+        let p = qlst.indexOf(qks.indexOf(lc));
+        let swp = qlst[p];
+        qlst[p]=qlst[0];
+        qlst[0]=swp;
+    }
+
     var letter=[];
     if(qz.mode==0){
         while(true){
@@ -48,8 +55,9 @@ function nq() {
     for(let i=0; i<letter.length; i++){
         let newopt = document.createElement("div");
         newopt.classList.add("opt");
-        newopt.classList.add("no-select");
+        //newopt.classList.add("no-select");
         newopt.textContent=letter[i];
+        if(letter[i]==" "){newopt.classList.add("spc");}
         newopt.addEventListener('click', spell);
         opts.appendChild(newopt); 
     }
@@ -123,10 +131,24 @@ function chds(){
     _chds(qz.dsno);
     mode(2, true);
 }
+function lq(){
+    let d = $("#debug");
+    d.innerHTML = "";
+    for(let i=0; i<qks.length; i++){
+        let newopt = document.createElement("div");
+        newopt.classList.add("lst");
+        newopt.textContent=qks[i];
+        newopt.addEventListener('click', function(e){nq(this.textContent);window.scrollTo(0,0)});
+        d.appendChild(newopt); 
+    }
+}
 </script>
 <style>
     #opts { display:flex; flex-wrap:wrap; }
     #opts .opt { font-size:2em; font-weight:bold; font-family:Courier New; display:flex; }
+    #opts .spc { width:1em; }
+    #debug .lst { border:3px solid grey; cursor:hand; }
+    #debug .lst:hover { border:3px solid blue; cursor:hand; }
 
     @media (orientation: portrait){
         #opts .opt { margin:20px; padding:20px; font-size:2em; }
@@ -136,7 +158,7 @@ function chds(){
 </head>
 <body onload="init()">
     <div id="container">
-        <div id="menu"><div id="items">[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">易</span>]&nbsp;&nbsp;[<span onclick="mode(1)">難</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]&nbsp;&nbsp;[<span onclick="chds()">ds</span>]</div><div id="toggle" onclick='toggle("#items")'>≡</div></div>
+        <div id="menu"><div id="items">[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">易</span>]&nbsp;&nbsp;[<span onclick="mode(1)">難</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]&nbsp;&nbsp;[<span onclick="chds()">ds</span>]&nbsp;&nbsp;[<span onclick="lq()">n</span>]</div><div id="toggle" onclick='toggle("#items")'>≡</div></div>
         <div id="status"><span id="gds"></span>答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
         <div id="btndiv"><button id="btnPlay" onclick="speak()">播放</button>&nbsp;&nbsp;<button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
         <div id="q">題目</div>
