@@ -21,8 +21,10 @@ function init(){
     aw.volume = 0.5;
     ar.volume = 0.5;
     qz.dsno=Number(act("ds"));
+    qz.mode=Number(act("md"));
+    if(qz.mode>1){ qz.mode=0; }
     _chds(qz.dsno);
-    mode(0, true);
+    mode(qz.mode, true);
 }
 
 function nq(lc="") {
