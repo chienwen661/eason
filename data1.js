@@ -162,7 +162,10 @@ function speak(){
     utterance.volume=1; // 0 ~ 1
     */
     synth.speak(utterance);
-    $("#debug").textContent="-->"+utterance.voice.toString();
+    //$("#debug").textContent=utterance.voice;
+    //$("#debug").textContent+="-->"+utterance.voice.name;
+    //$("#debug").textContent+="-->"+utterance.text;
+    //$("#debug").textContent+="-->"+JSON.stringify(voices);
 }
 
 function _chds(m){
