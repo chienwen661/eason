@@ -149,7 +149,7 @@ function act(sp){ u = new URL(window.location.href); return u.searchParams.get(s
 window.speechSynthesis.onvoiceschanged = () => {
     voices = window.speechSynthesis.getVoices();
     // Now you can safely use the voices array
-    $("#debug").textContent="-->"+voices.length;
+    $("#debug").style.borderColor="#FF0000";
 };
 
 function speak(){
@@ -163,7 +163,7 @@ function speak(){
     utterance.volume=1; // 0 ~ 1
     */
     synth.speak(utterance);
-    $("#debug").textContent="-->"+voices.toString();
+    $("#debug").textContent="-->"+voices[0].name;
 }
 
 function _chds(m){
