@@ -150,7 +150,7 @@ function speak(){
     if (!spk || synth.speaking){ return false; }
 
     let utterance = new SpeechSynthesisUtterance(spk);
-    utterance.voice = voices[0]; // Choose a specific voice
+    //utterance.voice = voices[0]; // Choose a specific voice
     utterance.pitch=1;  // 0 ~ 2
     utterance.rate=1;   // 0.1 ~ 2 比較不會出問題
     utterance.volume=1; // 0 ~ 1
@@ -174,3 +174,9 @@ function _chds(m){
 
 //console.log(qks);
 //console.log(qvs);
+
+history.replaceState(null, null, location.href);
+
+window.addEventListener('popstate', function(event) {
+    history.pushState(null, null, location.href);
+});
