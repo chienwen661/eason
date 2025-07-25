@@ -44,7 +44,8 @@ function nq() {
     }
     
     $("#q").textContent=qks[qlst[0]];
-    spk=(qz.mode==0)?qks[qlst[0]]:qvs[qlst[0]];
+    //spk=(qz.mode==0)?qks[qlst[0]]:qvs[qlst[0]];
+    $("#btnPlay").value=(qz.mode==0)?qks[qlst[0]]:qvs[qlst[0]];
 
     rpt.push(qlst[0]);
     if(rpt.length==qks.length){ rpt = []; }
@@ -113,7 +114,7 @@ function showredo(){
     <div id="container">
       <div id="menu"><div id="items">[<span onclick="mode(2)">重新開始</span>]&nbsp;&nbsp;[<span onclick="mode(0)">英選中</span>]&nbsp;&nbsp;[<span onclick="mode(1)">中選英</span>]&nbsp;&nbsp;[<span onclick="showredo()">err</span>]</div><div id="toggle" onclick='toggle("#items")'>≡</div></div>
         <div id="status"><span id="gds"></span>答對<span id="gr">0</span>題，已答錯<span id="gw">0</span>次。 </div>
-        <div id="btndiv"><button id="btnPlay" onclick="speak()">播放</button>&nbsp;&nbsp;<button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
+        <div id="btndiv"><button id="btnPlay" value="" onclick="speak(this.value)">播放</button>&nbsp;&nbsp;<button id="btnNext" onclick="nq()" disabled="true">下一題</button></div>
         <div id="q">題目</div>
         <div id="opts"></div>
         <div id="ans"></div>
