@@ -134,7 +134,7 @@ var qs1={
 const ar=document.createElement("audio");
 const aw=document.createElement("audio");
 const synth = window.speechSynthesis;
-//const voices = synth.getVoices();
+var voices = synth.getVoices();
 var spk="";
 
 var qks = [];
@@ -147,8 +147,9 @@ function toggle(o){ if(typeof o==='string'){ o=$(o); } o.style.display=(o.style.
 function act(sp){ u = new URL(window.location.href); return u.searchParams.get(sp); }
 
 window.speechSynthesis.onvoiceschanged = () => {
-    const voices = window.speechSynthesis.getVoices();
+    voices = window.speechSynthesis.getVoices();
     // Now you can safely use the voices array
+    $("#debug").textContent="-->"+voices.length;
 };
 
 function speak(){
@@ -162,7 +163,7 @@ function speak(){
     utterance.volume=1; // 0 ~ 1
     */
     synth.speak(utterance);
-    $("#debug").textContent="-->"+voices.length;
+    $("#debug").textContent="-->"+voices.toString();
 }
 
 function _chds(m){
