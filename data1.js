@@ -84,6 +84,10 @@ var qs={
     "tea":"茶",
     "rice":"米、飯",
     "winter":"冬天",
+    "October":"十月",
+    "November":"十一月",
+    "December":"十二月",
+    "month":"月份",
     "Eason":"陳昱瀚"
 };
 
@@ -118,6 +122,10 @@ var qs1={
     "tea":"茶",
     "rice":"米、飯",
     "winter":"冬天",
+    "October":"十月",
+    "November":"十一月",
+    "December":"十二月",
+    "month":"月份",
     "Eason":"陳昱瀚"
 };
 
